@@ -1,20 +1,18 @@
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { getSingleProduct } from '../firebase/db'
+import ItemDetail from './ItemDetail'
 
 function ItemDetailContainer () {
   const [detail, setDetail] = useState()
   const { id } = useParams()
   
   useEffect(() => {
-    fetch(`https://66d63577f5859a704268a79b.mockapi.io/products/${id}`)
-      .then(res => res.json())
-      .then(res => setDetail(res))
+      getSingleProduct(id, setDetail)
   }, [id])
 
   return (
-    <div>
-      <p>{detail?.name}</p>
-    </div>
+    <ItemDetail detail={detail} />
   )
 }
 
