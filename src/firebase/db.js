@@ -3,7 +3,8 @@ import {
   collection, 
   getDocs, 
   doc, 
-  getDoc 
+  getDoc,
+  addDoc 
 } from "firebase/firestore"
 import { app } from './config'
 
@@ -29,5 +30,15 @@ export const getSingleProduct = async (id, setItem) => {
   } else {
     // docSnap.data() will be undefined in this case
     console.log("No such document!")
+  }
+}
+
+export const createOrder = async (order) => {
+  try {
+    const docRef = await addDoc(collection(db, "orders"), order)
+    console.log("Document written with ID: ", docRef.id)
+    return docRef.id
+  } catch (e) {
+    console.error("Error adding document: ", e)
   }
 }
